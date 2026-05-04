@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supakorn Yoosri — Backend / Full-Stack Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c0c0e;
+      --surface: #141418;
+      --surface2: #1c1c23;
+      --border: #2a2a35;
+      --accent: #e8452c;
+      --accent2: #f0a500;
+      --text: #e8e6e0;
+      --muted: #7a7880;
+      --tag-bg: #1e1e28;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .hero-left {
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-right {
+      background: var(--accent);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-right::before {
+      content: 'SK';
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28vw;
+      color: rgba(0,0,0,0.15);
+      position: absolute;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .hero-right-inner {
+      position: relative;
+      z-index: 2;
+      padding: 60px;
+      text-align: center;
+    }
+
+    .thai-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    .big-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 6vw, 7rem);
+      line-height: 0.9;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+
+    .available-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(8px);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: #fff;
+      margin-top: 28px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .available-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 7vw, 9rem);
+      line-height: 0.88;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+
+    .hero-title span {
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      margin-top: 32px;
+      max-width: 480px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      border-left: 2px solid var(--accent);
+      padding-left: 20px;
+    }
+
+    .hero-contacts {
+      display: flex;
+      gap: 24px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-item:hover { color: var(--accent); }
+
+    .contact-item svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      left: -100%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      animation: slide 1.8s ease-in-out infinite;
+    }
+
+    @keyframes slide {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* ── LAYOUT ── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .content { border-right: 1px solid var(--border); }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 56px 60px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.05em;
+      color: var(--text);
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── EXPERIENCE ── */
+    .experience-item {
+      padding: 44px 60px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    .experience-item:hover {
+      background: var(--surface);
+    }
+
+    .experience-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: transparent;
+      transition: background 0.3s;
+    }
+
+    .experience-item:hover::before {
+      background: var(--accent);
+    }
+
+    .exp-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 6px;
+    }
+
+    .exp-company {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+    }
+
+    .exp-period {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      margin-top: 6px;
+      background: var(--tag-bg);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .exp-role {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .exp-bullets li {
+      font-size: 0.9rem;
+      color: #b0adb8;
+      line-height: 1.6;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .exp-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar { background: var(--surface); }
+
+    .sidebar-block {
+      padding: 44px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* ── SKILLS ── */
+    .skill-group { margin-bottom: 24px; }
+
+    .skill-group-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      padding: 5px 11px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(232,69,44,0.08);
+    }
+
+    /* ── EDUCATION ── */
+    .edu-school {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .edu-degree {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .edu-period {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent);
+      margin-top: 10px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── LANGUAGE ── */
+    .lang-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .lang-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .lang-bar {
+      width: 100px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .lang-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 1s ease;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 60px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-left {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .footer-right {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      color: var(--border);
+    }
+
+    /* ── CURSOR GLOW ── */
+    .cursor-glow {
+      pointer-events: none;
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,69,44,0.06) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+      z-index: 1;
+    }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 280px; }
+      .hero-left { padding: 60px 28px 48px; }
+      .hero-title { font-size: clamp(3rem, 12vw, 6rem); }
+      .scroll-hint { left: 28px; }
+
+      .main-grid { grid-template-columns: 1fr; }
+      .content { border-right: none; }
+      .section-header { padding: 40px 28px 24px; }
+      .experience-item { padding: 36px 28px; }
+      .sidebar-block { padding: 36px 28px; }
+      footer { padding: 24px 28px; flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor-glow" id="glow"></div>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Portfolio · Resume · 2025</div>
+    <h1 class="hero-title">
+      SUPA<span>K</span>ORN<br>YOOSRI
+    </h1>
+    <p class="hero-desc">
+      Backend-leaning Full-Stack Developer building workflow automation and financial systems. Skilled in RESTful APIs, Node.js, NestJS, and relational databases.
+    </p>
+    <div class="hero-contacts">
+      <a href="tel:0918642875" class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5a19.79 19.79 0 01-3-8.57A2 2 0 012.11 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        091-864-2875
+      </a>
+      <a href="mailto:supakorn.yoosri@gmail.com" class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        supakorn.yoosri@gmail.com
+      </a>
+      <a href="#" class="contact-item">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Bangkok, Thailand
+      </a>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      Scroll to explore
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-inner">
+      <div class="thai-name">ศุภกร อยู่ศรี</div>
+      <div class="big-name">BACKEND<br>/ FULL<br>STACK</div>
+      <div class="available-badge">Available for work</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAIN CONTENT + SIDEBAR ── -->
+<div class="main-grid">
+
+  <!-- LEFT: EXPERIENCE -->
+  <div class="content">
+    <div class="section-header reveal">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="experience-item reveal">
+      <div class="exp-top">
+        <div>
+          <div class="exp-company">Mizuhada</div>
+          <div class="exp-role">Software Developer</div>
+        </div>
+        <div class="exp-period">Mar 2025 — Dec 2025</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Developed a web-based business operations platform supporting in-store sales and internal financial workflows</li>
+        <li>Implemented a petty cash management module for expense tracking and daily financial operations</li>
+        <li>Designed and developed a requisition workflow system with approval processes and real-time status tracking</li>
+        <li>Built a marketing budget and expense approval module with audit trails for improved financial transparency</li>
+        <li>Developed RESTful APIs to support core system functions and frontend–backend integration</li>
+        <li>Worked across frontend, backend, and database layers to deliver end-to-end features</li>
+      </ul>
+    </div>
+
+    <div class="experience-item reveal">
+      <div class="exp-top">
+        <div>
+          <div class="exp-company">Avalant</div>
+          <div class="exp-role">Full-Stack Developer</div>
+        </div>
+        <div class="exp-period">May 2024 — Sep 2024</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Collaborated with a development team to build an internal management system for government use</li>
+        <li>Worked with PostgreSQL and PL/pgSQL to support database logic, data handling, and system performance</li>
+        <li>Developed frontend interfaces for data input and visualization</li>
+        <li>Implemented RESTful APIs for communication between application layers</li>
+        <li>Contributed to full-stack feature delivery in a structured development environment</li>
+      </ul>
+    </div>
+
+    <div class="experience-item reveal">
+      <div class="exp-top">
+        <div>
+          <div class="exp-company">Base Playhouse</div>
+          <div class="exp-role">Full-Stack Developer Intern</div>
+        </div>
+        <div class="exp-period">May 2023 — Sep 2023</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Assisted in developing a web platform for user matching to support collaboration between users</li>
+        <li>Built a gamified skill assessment feature to improve user engagement</li>
+        <li>Supported both frontend and backend development tasks</li>
+        <li>Used Docker and Docker Compose to set up local database and development environments</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- RIGHT: SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- SKILLS -->
+    <div class="sidebar-block reveal">
+      <div class="sidebar-label">02 · Skills</div>
+
+      <div class="skill-group">
+        <div class="skill-group-name">Frontend</div>
+        <div class="skill-tags">
+          <span class="tag">React.js</span>
+          <span class="tag">Next.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Angular</span>
+          <span class="tag">HTML/CSS</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-name">Backend</div>
+        <div class="skill-tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">NestJS</span>
+          <span class="tag">.NET</span>
+          <span class="tag">PHP</span>
+          <span class="tag">RESTful API</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-name">Database</div>
+        <div class="skill-tags">
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">PL/pgSQL</span>
+          <span class="tag">Query Opt.</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-name">Tools</div>
+        <div class="skill-tags">
+          <span class="tag">Git</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Compose</span>
+          <span class="tag">Postman</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="sidebar-block reveal">
+      <div class="sidebar-label">03 · Education</div>
+      <div class="edu-school">Thai-Nichi Institute of Technology</div>
+      <div class="edu-degree">Faculty of Computer Engineering<br>Bachelor of Engineering</div>
+      <div class="edu-period">2020 — 2024</div>
+    </div>
+
+    <!-- LANGUAGE -->
+    <div class="sidebar-block reveal">
+      <div class="sidebar-label">04 · Language</div>
+      <div class="lang-item">
+        <span class="lang-name">Thai</span>
+        <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+      </div>
+      <div class="lang-item">
+        <span class="lang-name">English</span>
+        <div class="lang-bar"><div class="lang-fill" style="width:70%"></div></div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="sidebar-block reveal">
+      <div class="sidebar-label">05 · Contact</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <a href="tel:0918642875" class="contact-item" style="font-size:0.82rem">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5a19.79 19.79 0 01-3-8.57A2 2 0 012.11 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          091-864-2875
+        </a>
+        <a href="mailto:supakorn.yoosri@gmail.com" class="contact-item" style="font-size:0.82rem">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="22,6 12,13 2,6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          supakorn.yoosri@gmail.com
+        </a>
+        <span class="contact-item" style="font-size:0.82rem;cursor:default">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          Bangkok, Thailand
+        </span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-left">© 2025 Supakorn Yoosri · All rights reserved</div>
+  <div class="footer-right">SUPAKORN YOOSRI</div>
+</footer>
+
+<script>
+  // Cursor glow
+  const glow = document.getElementById('glow');
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
