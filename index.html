@@ -361,6 +361,36 @@
     }
 
     /* ── SIDEBAR ── */
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.76rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--accent);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .project-link:hover {
+      color: var(--accent);
+      border-color: var(--text);
+    }
+
+    .project-link svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     .sidebar { background: var(--surface); }
 
     .sidebar-block {
@@ -515,7 +545,14 @@
       .hero-right { min-height: 280px; }
       .hero-left { padding: 60px 28px 48px; }
       .hero-title { font-size: clamp(3rem, 12vw, 6rem); }
-      .scroll-hint { left: 28px; }
+      .hero-contacts {
+        row-gap: 14px;
+        margin-top: 40px;
+      }
+      .scroll-hint {
+        position: static;
+        margin-top: 32px;
+      }
 
       .main-grid { grid-template-columns: 1fr; }
       .content { border-right: none; }
@@ -628,6 +665,31 @@
         <li>Used Docker and Docker Compose to set up local database and development environments</li>
       </ul>
     </div>
+
+    <div class="section-header reveal">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Featured Project</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="experience-item reveal">
+      <div class="exp-top">
+        <div>
+          <div class="exp-company">CoverShop TH</div>
+          <div class="exp-role">E-Commerce Website</div>
+        </div>
+        <div class="exp-period">Web Project</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Built and deployed a responsive online storefront for phone case products</li>
+        <li>Designed product browsing pages and a clean customer-facing shopping experience</li>
+        <li>Published the production site on Vercel for fast access and reliable hosting</li>
+      </ul>
+      <a class="project-link" href="https://covershop-th.vercel.app/" target="_blank" rel="noopener noreferrer">
+        Visit Website
+        <svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+      </a>
+    </div>
   </div>
 
   <!-- RIGHT: SIDEBAR -->
@@ -635,7 +697,7 @@
 
     <!-- SKILLS -->
     <div class="sidebar-block reveal">
-      <div class="sidebar-label">02 · Skills</div>
+      <div class="sidebar-label">03 · Skills</div>
 
       <div class="skill-group">
         <div class="skill-group-name">Frontend</div>
@@ -684,7 +746,7 @@
 
     <!-- EDUCATION -->
     <div class="sidebar-block reveal">
-      <div class="sidebar-label">03 · Education</div>
+      <div class="sidebar-label">04 · Education</div>
       <div class="edu-school">Thai-Nichi Institute of Technology</div>
       <div class="edu-degree">Faculty of Computer Engineering<br>Bachelor of Engineering</div>
       <div class="edu-period">2020 — 2024</div>
@@ -692,7 +754,7 @@
 
     <!-- LANGUAGE -->
     <div class="sidebar-block reveal">
-      <div class="sidebar-label">04 · Language</div>
+      <div class="sidebar-label">05 · Language</div>
       <div class="lang-item">
         <span class="lang-name">Thai</span>
       </div>
@@ -703,7 +765,7 @@
 
     <!-- CONTACT -->
     <div class="sidebar-block reveal">
-      <div class="sidebar-label">05 · Contact</div>
+      <div class="sidebar-label">06 · Contact</div>
       <div style="display:flex;flex-direction:column;gap:12px;">
         <a href="tel:0918642875" class="contact-item" style="font-size:0.82rem">
           <svg viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5a19.79 19.79 0 01-3-8.57A2 2 0 012.11 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
